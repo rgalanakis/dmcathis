@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 import urllib2
 
 
@@ -9,7 +10,12 @@ class DmcaThis(object):
 		pass
 	def run(self):
 		while True:
-			pass
+			print 'looped'
+			if self.is_vpn_running():
+				self.when_vpn_up()
+			else:
+				self.when_vpn_down()
+			sleep(1)
 	def is_vpn_running(self):
 		check_endpoint = 'http://' + self.ip() + ':8888/speedtest/'
 		try:
@@ -20,11 +26,15 @@ class DmcaThis(object):
 	def ip(self):
 		return urllib2.urlopen('http://icanhazip.com').strip()
 	def when_vpn_up(self):
-		subprocess.call(['/usr/bin/python', '/usr/bin/deluged', '-d'])
-		subprocess.call(['/usr/bin/python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
+		print 'VPN UP'
+		# subprocess.call(['/usr/bin/python', '/usr/bin/deluged', '-d'])
+		# subprocess.call(['/usr/bin/python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
   	def when_vpn_down(self):
-  		subprocess.call(['sudo', 'killall', 'deluged'])
-  		subprocess.call(['sudo', '/etc/init.d/openvpn', 'restart'])
+  		print 'VPN DOWN'
+  		# subprocess.call(['sudo', 'killall', 'deluged'])
+  		# subprocess.call(['sudo', '/etc/init.d/openvpn', 'restart'])
 
+print 'calling!'
 if __name__ == '__main__':
+	print 'running'
 	DmcaThis().run()
