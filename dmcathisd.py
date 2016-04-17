@@ -24,7 +24,7 @@ class DmcaThis(object):
 			return False
 		return True
 	def ip(self):
-		return urllib2.urlopen('http://icanhazip.com').strip()
+		return urllib2.urlopen('http://icanhazip.com').read().strip()
 	def when_vpn_up(self):
 		print 'VPN UP'
 		# subprocess.call(['/usr/bin/python', '/usr/bin/deluged', '-d'])
