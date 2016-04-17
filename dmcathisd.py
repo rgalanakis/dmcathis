@@ -28,12 +28,17 @@ class DmcaThis(object):
 			return False
 		return True
 	def when_vpn_up(self):
-		# subprocess.call(['sudo', 'python', '/usr/bin/deluged', '-d'])
-		subprocess.call(['python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
+		ps = subprocess.check_output(['ps', 'alx'])
+		if 'deluged' not in ps:
+			print 'Starting deluged'
+			# subprocess.call(['python', '/usr/bin/deluged', '-d'])
+		if 'deluge-web' not in ps:
+			print 'Starting deluge-web'
+			subprocess.call(['python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
 	def when_vpn_down(self):
 		print 'Uh oh, VPN is down! Killing deluge, starting OpenVPN.'
-		subprocess.call(['sudo', 'killall', 'deluged'])
-		subprocess.call(['sudo', 'killall', 'deluge-web'])
+		subprocess.call(['killall', 'deluged'])
+		subprocess.call(['killall', 'deluge-web'])
 		subprocess.call(['sudo', '/etc/init.d/openvpn', 'start'])
 
 if __name__ == '__main__':
