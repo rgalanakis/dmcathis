@@ -20,7 +20,7 @@ class DmcaThis(object):
 	def is_vpn_running(self):
 		check_endpoint = 'http://' + self.ip() + ':8888/speedtest/'
 		try:
-			urllib2.urlopen(check_endpoint)
+			urllib2.urlopen(check_endpoint, timeout=1)
 		except urllib2.URLError:
 			return False
 		return True
