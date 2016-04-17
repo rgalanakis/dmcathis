@@ -11,7 +11,6 @@ class DmcaThis(object):
 		pass
 	def run(self):
 		while True:
-			print 'looping'
 			if self.is_vpn_running():
 				self.when_vpn_up()
 			else:
@@ -29,13 +28,13 @@ class DmcaThis(object):
 			return False
 		return True
 	def when_vpn_up(self):
-		subprocess.call(['sudo', 'python', '/usr/bin/deluged', '-d'])
-		subprocess.call(['sudo', 'python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
-  	def when_vpn_down(self):
+		# subprocess.call(['sudo', 'python', '/usr/bin/deluged', '-d'])
+		subprocess.call(['python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
+	def when_vpn_down(self):
+		print 'Uh oh, VPN is down! Killing deluge, starting OpenVPN.'
 		subprocess.call(['sudo', 'killall', 'deluged'])
+		subprocess.call(['sudo', 'killall', 'deluge-web'])
 		subprocess.call(['sudo', '/etc/init.d/openvpn', 'start'])
 
-print 'calling!'
 if __name__ == '__main__':
-	print 'running'
 	DmcaThis().run()
