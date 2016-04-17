@@ -31,10 +31,10 @@ class DmcaThis(object):
 		ps = subprocess.check_output(['ps', 'alx'])
 		if 'deluged' not in ps:
 			print 'Starting deluged'
-			# subprocess.call(['python', '/usr/bin/deluged', '-d'])
+			# subprocess.Popen(['python', '/usr/bin/deluged', '-d'])
 		if 'deluge-web' not in ps:
 			print 'Starting deluge-web'
-			subprocess.call(['python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
+			subprocess.Popen(['python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
 	def when_vpn_down(self):
 		print 'Uh oh, VPN is down! Killing deluge, starting OpenVPN.'
 		subprocess.call(['killall', 'deluged'])
