@@ -11,21 +11,23 @@ class DmcaThis(object):
 		pass
 	def run(self):
 		while True:
-			print 'looped'
+			print 'looping'
 			if self.is_vpn_running():
 				self.when_vpn_up()
 			else:
 				self.when_vpn_down()
 			time.sleep(1)
 	def is_vpn_running(self):
-		check_endpoint = 'http://' + self.ip() + ':8888/speedtest/'
+		try:
+			ip = urllib2.urlopen('http://icanhazip.com', timeout=1).read().strip()
+		except urllib2.URLError:
+			return False
+		check_endpoint = 'http://' + ip + ':8888/speedtest/'
 		try:
 			urllib2.urlopen(check_endpoint, timeout=1)
 		except urllib2.URLError:
 			return False
 		return True
-	def ip(self):
-		return urllib2.urlopen('http://icanhazip.com').read().strip()
 	def when_vpn_up(self):
 		print 'VPN UP'
 		# subprocess.call(['/usr/bin/python', '/usr/bin/deluged', '-d'])
