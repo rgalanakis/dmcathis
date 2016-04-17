@@ -33,8 +33,8 @@ class DmcaThis(object):
 		# subprocess.call(['/usr/bin/python', '/usr/bin/deluged', '-d'])
 		# subprocess.call(['/usr/bin/python', '/usr/bin/deluge-web', '-L', 'info', '-l', '/var/log/delugeweb.log'])
   	def when_vpn_down(self):
-  		subprocess.call(['sudo', 'killall', 'deluged'])
-  		subprocess.call(['sudo', '/etc/init.d/openvpn', 'restart'])
+		subprocess.call(['sudo', 'killall', 'deluged'])
+		subprocess.call(['sudo', '/etc/init.d/openvpn', 'start'])
 
 print 'calling!'
 if __name__ == '__main__':
