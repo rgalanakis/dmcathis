@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import time
 import urllib2
 
 
@@ -15,7 +16,7 @@ class DmcaThis(object):
 				self.when_vpn_up()
 			else:
 				self.when_vpn_down()
-			sleep(1)
+			time.sleep(1)
 	def is_vpn_running(self):
 		check_endpoint = 'http://' + self.ip() + ':8888/speedtest/'
 		try:
